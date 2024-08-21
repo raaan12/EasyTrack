@@ -1,13 +1,16 @@
 import {Component, computed, EventEmitter, input, Input, output, Output, signal} from '@angular/core';
 import {DUMMY_USERS} from "../../dummy-users";
 import {User} from "../../models/User";
+import {CardComponent} from "../../shared/card/card.component";
 
 //const randomIndex = Math.floor(Math.random() * DUMMY_USERS.length);
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [],
+  imports: [
+    CardComponent
+  ],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })
@@ -18,6 +21,7 @@ export class UserComponent {
   //@Input({required:true}) avatar!: string; // we use ! to tell angular that we don't need to initialise this because it is gonna be initialized outside this component (by the app component)
   //@Input({required:true}) name!: string; // same here to avoid this error (Property 'name' has no initializer and is not definitely assigned in the constructor.)
   @Input({required:true}) user!: User;
+  @Input({required:true}) selected!: boolean;
   /*
   // ------------- this is an input also but we use the input function this a function to say that input is a signal ---------------
   avatarSignal = input.required<string>();

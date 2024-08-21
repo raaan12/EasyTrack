@@ -4,20 +4,20 @@ export const DUMMY_TASKS =[
     userId:'u1',
     title: 'master angular',
     summary: 'test',
-    dueDta: '2024-12-31'
+    dueDate: '2024-12-31'
   },
   {
     id:'t2',
     userId:'u2',
     title: 'master spring',
     summary: 'test',
-    dueDta: '2024-12-31'
+    dueDate: '2024-12-31'
   },
   {
     id:'t3',
     userId:'u4',
     title: 'master mongo',
     summary: 'test',
-    dueDta: '2024-12-31'
+    dueDate: '2024-12-31'
   },
 ];
