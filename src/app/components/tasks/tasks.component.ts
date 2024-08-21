@@ -6,6 +6,7 @@ import {DUMMY_TASKS} from "../../dummy-tasks";
 import {EditorComponent, TINYMCE_SCRIPT_SRC} from "@tinymce/tinymce-angular";
 import {NewTaskComponent} from "./new-task/new-task.component";
 import {NewTaskData} from "../../models/User";
+import {TaskService} from './task.service'
 
 @Component({
   selector: 'app-tasks',
@@ -20,35 +21,36 @@ import {NewTaskData} from "../../models/User";
 export class TasksComponent {
   @Input({required: true}) name!: string;
   @Input({required: true}) userId!: string;
+  // private taskService = new TaskService();  // if we use it like that we use a local instance so if there is an update in another component using the same service this component will not be notified with these changes that's why we are going to use the dependency injection
 
-  isAddingTask= false;
-  tasks = DUMMY_TASKS
+  private taskService: TaskService;
+
+  constructor(taskService: TaskService) {
+    this.taskService = taskService;
+  }
+
+  isAddingTask = false;
+
+  //tasks = DUMMY_TASKS // is added to the service
 
   get selectedUserTask() {
-    return this.tasks.filter((task) => task.userId === this.userId);
+    return this.taskService.getUserTasks(this.userId);
   }
 
   onCompleteTask(id: string) {
-    this.tasks = this.tasks.filter((task) => task.id !== id);
+    return this.taskService.removeTask(id);
   }
 
-  onStartAddTask(){
-    this.isAddingTask= true;
+  onStartAddTask() {
+    this.isAddingTask = true;
   }
 
-  onCancelAddTask(){
+  onCancelAddTask() {
     this.isAddingTask = false;
   }
 
-  onAddTask(taskData: NewTaskData){
-    this.tasks.unshift({
-      id: new Date().getTime().toString(),
-      userId: this.userId,
-      title: taskData.title,
-      summary: taskData.summary,
-      dueDate: taskData.date,
-
-    })
+  onAddTask(taskData: NewTaskData) {
+    this.taskService.addTask(taskData, this.userId)
     this.isAddingTask = false;
 
   }
