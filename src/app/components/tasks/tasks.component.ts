@@ -6,7 +6,7 @@ import {DUMMY_TASKS} from "../../dummy-tasks";
 import {EditorComponent, TINYMCE_SCRIPT_SRC} from "@tinymce/tinymce-angular";
 import {NewTaskComponent} from "./new-task/new-task.component";
 import {NewTaskData} from "../../models/User";
-import {TaskService} from './task.service'
+import {TaskService} from './task.Service'
 
 @Component({
   selector: 'app-tasks',
@@ -37,21 +37,11 @@ export class TasksComponent {
     return this.taskService.getUserTasks(this.userId);
   }
 
-  onCompleteTask(id: string) {
-    return this.taskService.removeTask(id);
-  }
-
   onStartAddTask() {
     this.isAddingTask = true;
   }
 
-  onCancelAddTask() {
+  onCloseAddTask() {
     this.isAddingTask = false;
-  }
-
-  onAddTask(taskData: NewTaskData) {
-    this.taskService.addTask(taskData, this.userId)
-    this.isAddingTask = false;
-
   }
 }
